@@ -1,0 +1,13 @@
+{
+  "backend-errors": {
+    "authorization-error": "Не удалось авторизоваться",
+    "get-supplier-error": "Не удалось получить данные поставщика",
+    "get-costs-error": "Не удалось найти стоимости хранения",
+    "Failed to fetch": "Системная ошибка",
+    "network-error": "Системная ошибка",
+    "timeout-error": "Превышено время ожидания запроса"
+  },
+  "todo-list": {
+    "pageTitle": "TODO App"
+  }
+}
