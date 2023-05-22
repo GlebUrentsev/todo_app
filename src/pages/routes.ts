@@ -1,3 +1,1 @@
-import todo from './todo/route';
-
-export const routes = [todo];
+export const routes = [];
