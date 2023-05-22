@@ -14,7 +14,7 @@ const createTodoController = async (req, res) => {
   });
 };
 
-const getTodosController = async (req, res) => {
+const fetchTodosController = async (req, res) => {
   const todos = await todosModel.value();
 
   res.status(200).json({
@@ -33,6 +33,6 @@ const updateTodosController = async (req, res) => {
 module.exports = {
   deleteTodoController,
   createTodoController,
-  getTodosController,
+  fetchTodosController,
   updateTodosController,
 };

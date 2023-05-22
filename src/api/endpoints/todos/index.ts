@@ -1,6 +1,15 @@
-import { isProd } from '@/_utils/env';
+import {
+  ENDPOINT_ORIGIN,
+  ENDPOINT_TODOS_PATTERN,
+  ENDPOINT_CREATE_TODO_PATTERN,
+  ENDPOINT_DELETE_TODO_PATTERN,
+  ENDPOINT_UPDATE_TODO_PATTERN,
+} from './urls';
 
-const getEndpoint = () =>
-  isProd() ? 'http://some-cool-prod-url' : 'http://127.0.0.1:8081';
+export const fetchTodosEndpoint = `${ENDPOINT_ORIGIN}${ENDPOINT_TODOS_PATTERN}`;
 
-export const todosListEndpoint = `${getEndpoint()}/todos`;
+export const createTodoEndpoint = `${ENDPOINT_ORIGIN}${ENDPOINT_CREATE_TODO_PATTERN}`;
+
+export const deleteTodoEndpoint = `${ENDPOINT_ORIGIN}${ENDPOINT_DELETE_TODO_PATTERN}`;
+
+export const updateTodoEndpoint = `${ENDPOINT_ORIGIN}${ENDPOINT_UPDATE_TODO_PATTERN}`;

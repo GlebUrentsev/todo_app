@@ -1,9 +1,5 @@
-import { RestRequest, IResponse } from '@mihanizm56/fetch-api';
-import { todosListEndpoint } from '@/api/endpoints/todos';
-import { todoSchema } from './response-schema';
+import { JSONRPCRequest, IResponse } from '@mihanizm56/fetch-api';
+import { makeRequestConfig } from './make-request-config';
 
-export const getTodos = (): Promise<IResponse> =>
-  new RestRequest().getRequest({
-    endpoint: todosListEndpoint,
-    responseSchema: todoSchema,
-  });
+export const getCountriesListRequest = (): Promise<IResponse> =>
+  new JSONRPCRequest().makeRequest(makeRequestConfig());
