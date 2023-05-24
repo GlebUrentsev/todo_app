@@ -1,18 +1,18 @@
 import { memo, MutableRefObject } from 'react';
 import { Form, Field } from 'react-final-form';
-import { FormSimpleInput } from '@wildberries/ui-kit';
+import { FormSimpleInput, Text } from '@wildberries/ui-kit';
 import { FormApi } from 'final-form';
-import { FormCreateTodoType } from '@/pages/todos/_redux/todos-module/_types';
-import { validateTodoForm } from '../../../_utils/validations';
+import { CreatedTodoType } from '@/pages/todos/_redux/todos-module/_types';
+import { validateTodoForm } from '../../../../_utils/validations';
 
 type PropsType = {
   onSubmit: (values: any) => void;
-  formRef: MutableRefObject<FormApi<FormCreateTodoType>>;
+  formApiRef: MutableRefObject<FormApi<CreatedTodoType>>;
   isLoading: boolean;
 };
 
 export const CreateTodoFormView = memo(
-  ({ onSubmit, formRef, isLoading }: PropsType) => {
+  ({ onSubmit, formApiRef, isLoading }: PropsType) => {
     return (
       <Form
         onSubmit={onSubmit}
@@ -26,22 +26,36 @@ export const CreateTodoFormView = memo(
           invalid,
         }) => {
           // eslint-disable-next-line no-param-reassign
-          formRef.current = form;
+          formApiRef.current = form;
 
           return (
             <>
               <form onSubmit={handleSubmit}>
+                <Text size="h3-bold" text="Создать новую задачу" />
                 <Field
                   autoComplete="off"
                   component={FormSimpleInput}
-                  description={
+                  externalErrorMessage={
+                    touched.title && errors.title && <span>{errors.title}</span>
+                  }
+                  id="todo-title"
+                  label="Заголовок"
+                  name="title"
+                  placeholder="Впишите заголовок"
+                  required
+                  type="text"
+                />
+                <Field
+                  autoComplete="off"
+                  component={FormSimpleInput}
+                  externalErrorMessage={
                     touched.description &&
                     errors.description && <span>{errors.description}</span>
                   }
-                  id="todo"
-                  label="Создать задачу"
+                  id="todo-description"
+                  label="Название"
                   name="description"
-                  placeholder="Название задачи..."
+                  placeholder="Впишите название"
                   required
                   type="text"
                 />

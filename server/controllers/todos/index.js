@@ -34,7 +34,7 @@ const deleteTodoController = async (req, res) => {
 };
 
 const createTodoController = async (req, res) => {
-  const { todoData } = req.body;
+  const todoData = req.body;
 
   const newTodo = {
     id: `${Math.random().toString(36).substring(2, 10)}-${Date.now()}`,
@@ -69,7 +69,7 @@ const fetchTodosController = async (req, res) => {
 };
 
 const updateTodosController = async (req, res) => {
-  const { updatedData } = req.body;
+  const updatedData = req.body;
 
   const todos = await todosModel.value();
 

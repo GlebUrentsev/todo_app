@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormApi } from 'final-form';
 import { isTodosLoadingSelector } from '@/pages/todos/_redux/todos-module';
-import { FormCreateTodoType } from '@/pages/todos/_redux/todos-module/_types';
+import { CreatedTodoType } from '@/pages/todos/_redux/todos-module/_types';
+import { getCreateTodoConfig } from '@/pages/todos/_utils/get-create-todo-config';
 import { CreateTodoFormView } from './_components/create-todo-form-view';
-import { getCreateTodoConfig } from './_utils/get-create-todo-config';
 
 type MapStateOutputType = {
   isTodosLoading: ReturnType<typeof isTodosLoadingSelector>;
@@ -16,13 +16,13 @@ type MapStateOutputType = {
 type PropsType = MapStateOutputType;
 
 const Wrapper = memo(({ isTodosLoading, createTodo }: PropsType) => {
-  const formRef = useRef<FormApi<FormCreateTodoType>>(null);
+  const formApiRef = useRef<FormApi<CreatedTodoType>>(null);
 
   const handleSubmit = useCallback(
-    (values: FormCreateTodoType) => {
+    (values: CreatedTodoType) => {
       createTodo(
         getCreateTodoConfig({
-          formRef,
+          formApi: formApiRef.current,
           values,
         }),
       );
@@ -32,7 +32,7 @@ const Wrapper = memo(({ isTodosLoading, createTodo }: PropsType) => {
 
   return (
     <CreateTodoFormView
-      formRef={formRef}
+      formApiRef={formApiRef}
       isLoading={isTodosLoading}
       onSubmit={handleSubmit}
     />

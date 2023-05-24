@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormCheckbox, FormSimpleInput } from '@wildberries/ui-kit';
-import { validateTodoForm } from '@/pages/todos/page/_components/_utils/validations';
+import { validateTodoForm } from '@/pages/todos/page/_utils/validations';
 
 type PropsType = {
   onSubmit: (values: any) => void;
@@ -9,10 +9,11 @@ type PropsType = {
   isLoading: boolean;
   description: string;
   done: boolean;
+  title: string;
 };
 
 export const TodoItemUpdateForm = memo(
-  ({ onSubmit, onCancel, isLoading, description, done }: PropsType) => {
+  ({ onSubmit, onCancel, isLoading, description, title, done }: PropsType) => {
     return (
       <Form
         onSubmit={onSubmit}
@@ -31,10 +32,24 @@ export const TodoItemUpdateForm = memo(
                   autoComplete="off"
                   component={FormSimpleInput}
                   externalErrorMessage={
+                    touched.title && errors.title && <span>{errors.title}</span>
+                  }
+                  id="todo-title"
+                  initialValue={title}
+                  label="Изменить заголовок"
+                  name="title"
+                  placeholder="Новый заголовок задачи"
+                  required
+                  type="text"
+                />
+                <Field
+                  autoComplete="off"
+                  component={FormSimpleInput}
+                  externalErrorMessage={
                     touched.description &&
                     errors.description && <span>{errors.description}</span>
                   }
-                  id="todo"
+                  id="todo-description"
                   initialValue={description}
                   label="Изменить задачу"
                   name="description"
@@ -49,7 +64,7 @@ export const TodoItemUpdateForm = memo(
                   externalErrorMessage={
                     touched.done && errors.done && <span>{errors.done}</span>
                   }
-                  id="todo-checked"
+                  id="todo-done"
                   initialValue={done}
                   label="Задача выполнена"
                   name="done"

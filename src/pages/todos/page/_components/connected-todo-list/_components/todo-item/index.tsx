@@ -2,8 +2,8 @@ import { memo, useCallback, useState } from 'react';
 import { fetchFormManagerSagaAction } from '@mihanizm56/redux-core-modules';
 import { deleteTodoActionSaga } from '@/pages/todos/_redux/todos-module';
 import { Todo } from '@/pages/todos/_redux/todos-module/_types';
+import { getUpdateTodoConfig } from '@/pages/todos/_utils/get-update-todo-config';
 import { TodoItemUpdateForm } from './_components/todo-item-form';
-import { getUpdateTodoConfig } from './_components/todo-item-form/_utils/get-create-todo-config';
 
 type Props = {
   todo: Todo;
@@ -44,6 +44,7 @@ export const TodoItem = memo(
           isLoading={isTodosLoading}
           onCancel={candelEdit}
           onSubmit={handleSubmit}
+          title={todo.title}
         />
       );
     }
@@ -51,7 +52,7 @@ export const TodoItem = memo(
     return (
       <>
         <div key={todo.id}>
-          {new Date(todo.createdAt).toLocaleDateString('ru-RU')}{' '}
+          {new Date(todo.createdAt).toLocaleDateString('ru-RU')} {todo.title}{' '}
           {todo.description} {todo.done ? 'Завершена' : 'Не завершена'}
           <button onClick={toggleEditing} type="button">
             Edit

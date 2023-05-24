@@ -1,18 +1,14 @@
 import { StoreInjectConfig } from '@mihanizm56/redux-core-modules/dist/containers/redux-store-loader/types';
-import { Dispatch } from 'redux';
-import { batchActions } from 'redux-batched-actions';
 import reducerUI, {
   MODULE_REDUCER_NAME as reducerUIName,
 } from '@/_redux/ui-module';
-import { fetchTodosActionSaga } from '../_redux/todos-module/actions';
 import todosReducer from '../_redux/todos-module/reducer';
+import { TODOS_REDUCER_NAME } from '../_redux/todos-module';
 import {
   DELETE_TODO_WATCHER_SAGA_NAME,
-  FETCH_TODOS_WATCHER_SAGA_NAME,
-  deleteTodoSagaWatcher,
-  fetchTodosSagaWatcher,
-} from '../_redux/todos-module/sagas/todos';
-import { TODOS_REDUCER_NAME } from '../_redux/todos-module';
+  deleteTodoWatcherSaga,
+} from '../_redux/todos-module/sagas/delete-todo';
+import { getFetchTodosConfig } from '../_utils/get-fetch-todos-config';
 
 export const storeInjectConfig: StoreInjectConfig = {
   reducersToInject: [
@@ -27,18 +23,12 @@ export const storeInjectConfig: StoreInjectConfig = {
   ],
   sagasToInject: [
     {
-      name: FETCH_TODOS_WATCHER_SAGA_NAME,
-      saga: fetchTodosSagaWatcher,
-    },
-    {
       name: DELETE_TODO_WATCHER_SAGA_NAME,
-      saga: deleteTodoSagaWatcher,
+      saga: deleteTodoWatcherSaga,
     },
   ],
 
-  additionalConfig: {
-    callbackOnMount: (dispatch: Dispatch) => {
-      dispatch(batchActions([fetchTodosActionSaga()]));
-    },
+  initialLoadManagerConfig: {
+    requestConfigList: [getFetchTodosConfig()],
   },
 };

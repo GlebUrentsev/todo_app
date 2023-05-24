@@ -17,14 +17,6 @@ export const stopLoadingTodosAction: IReduxBaseAction<
 });
 stopLoadingTodosAction.type = STOP_LOADING_TODOS_ACTION;
 
-const FETCH_TODOS_ACTION_SAGA = 'FETCH_TODOS_ACTION_SAGA';
-export const fetchTodosActionSaga: IReduxBaseAction<
-  typeof FETCH_TODOS_ACTION_SAGA
-> = () => ({
-  type: FETCH_TODOS_ACTION_SAGA,
-});
-fetchTodosActionSaga.type = FETCH_TODOS_ACTION_SAGA;
-
 const FETCH_TODO_SUCCEEDED_ACTION = 'FETCH_TODO_SUCCEEDED_ACTION';
 export const fetchTodoSucceededAction: IReduxAction<
   Array<Todo>,
@@ -35,26 +27,6 @@ export const fetchTodoSucceededAction: IReduxAction<
 });
 fetchTodoSucceededAction.type = FETCH_TODO_SUCCEEDED_ACTION;
 
-const CREATE_TODO_SUCCEEDED_ACTION = 'CREATE_TODO_SUCCEEDED_ACTION';
-export const createTodoSucceededAction: IReduxAction<
-  Todo,
-  typeof CREATE_TODO_SUCCEEDED_ACTION
-> = (payload) => ({
-  type: CREATE_TODO_SUCCEEDED_ACTION,
-  payload,
-});
-createTodoSucceededAction.type = CREATE_TODO_SUCCEEDED_ACTION;
-
-const DELETE_TODO_ACTION = 'DELETE_TODO_ACTION';
-export const deleteTodoSucceededAction: IReduxAction<
-  number,
-  typeof DELETE_TODO_ACTION
-> = (payload) => ({
-  type: DELETE_TODO_ACTION,
-  payload,
-});
-deleteTodoSucceededAction.type = DELETE_TODO_ACTION;
-
 const DELETE_TODO_ACTION_SAGA = 'DELETE_TODO_ACTION_SAGA';
 export const deleteTodoActionSaga: IReduxAction<
   { id: number },
@@ -64,13 +36,3 @@ export const deleteTodoActionSaga: IReduxAction<
   payload,
 });
 deleteTodoActionSaga.type = DELETE_TODO_ACTION_SAGA;
-
-const UPDATE_TODO_ACTION = 'UPDATE_TODO_ACTION';
-export const updateTodoSucceededAction: IReduxAction<
-  Todo,
-  typeof UPDATE_TODO_ACTION
-> = (payload) => ({
-  type: UPDATE_TODO_ACTION,
-  payload,
-});
-updateTodoSucceededAction.type = UPDATE_TODO_ACTION;
