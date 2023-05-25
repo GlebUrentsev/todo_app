@@ -1,25 +1,18 @@
 {
   "todos": [
     {
-      "id": 1,
-      "created": "2022-02-05T02:40:31Z",
-      "done": false,
-      "title": "Work",
-      "description": "Сделать todo"
-    },
-    {
-      "id": 2,
-      "created": "2022-02-05T02:40:31Z",
-      "done": false,
-      "title": "Work",
-      "description": "Сделать todo"
-    },
-    {
-      "id": 3,
-      "created": "2022-02-05T02:40:31Z",
-      "done": false,
+      "id": "5dnzml80-1684936631057",
+      "done": true,
+      "createdAt": "2023-05-24T13:57:11.057Z",
       "title": "Home",
-      "description": "Сделать todo"
+      "description": "Todo home task 555"
+    },
+    {
+      "id": "vx4ixprp-1684939623294",
+      "done": false,
+      "createdAt": "2023-05-24T14:47:03.294Z",
+      "title": "fdfdf",
+      "description": "5353fdfd"
     }
   ]
 }
