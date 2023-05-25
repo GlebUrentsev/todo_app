@@ -1,5 +1,5 @@
 import { IReduxBaseAction, IReduxAction } from '@mihanizm56/redux-core-modules';
-import { Todo } from './_types';
+import { TodoType } from './_types';
 
 const START_LOADING_TODOS_ACTION = 'START_LOADING_TODOS_ACTION';
 export const startLoadingTodosAction: IReduxBaseAction<
@@ -17,15 +17,15 @@ export const stopLoadingTodosAction: IReduxBaseAction<
 });
 stopLoadingTodosAction.type = STOP_LOADING_TODOS_ACTION;
 
-const FETCH_TODO_SUCCEEDED_ACTION = 'FETCH_TODO_SUCCEEDED_ACTION';
-export const fetchTodoSucceededAction: IReduxAction<
-  Array<Todo>,
-  typeof FETCH_TODO_SUCCEEDED_ACTION
+const FETCH_TODO_SUCCESS_ACTION = 'FETCH_TODO_SUCCESS_ACTION';
+export const fetchTodoSuccessAction: IReduxAction<
+  Array<TodoType>,
+  typeof FETCH_TODO_SUCCESS_ACTION
 > = (payload) => ({
-  type: FETCH_TODO_SUCCEEDED_ACTION,
+  type: FETCH_TODO_SUCCESS_ACTION,
   payload,
 });
-fetchTodoSucceededAction.type = FETCH_TODO_SUCCEEDED_ACTION;
+fetchTodoSuccessAction.type = FETCH_TODO_SUCCESS_ACTION;
 
 const DELETE_TODO_ACTION_SAGA = 'DELETE_TODO_ACTION_SAGA';
 export const deleteTodoActionSaga: IReduxAction<

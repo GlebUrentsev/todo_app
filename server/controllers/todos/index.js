@@ -28,7 +28,9 @@ const deleteTodoController = async (req, res) => {
     jsonrpc: '2.0',
     error: false,
     errorText: '',
-    data: {},
+    data: {
+      id: deletedId,
+    },
     additionalErrors: null,
   });
 };

@@ -1,25 +1,25 @@
-import { ComponentType, memo } from 'react';
+import { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 import { fetchFormManagerSagaAction } from '@mihanizm56/redux-core-modules';
 import {
   deleteTodoActionSaga,
   isTodosLoadingSelector,
   todosSelector,
 } from '@/pages/todos/_redux/todos-module';
+import { TodosStoreType } from '@/pages/todos/_redux/todos-module/_types';
 import { TodoItem } from './_components/todo-item';
 
-type MapStateOutputType = {
+type PropsType = {
   todos: ReturnType<typeof todosSelector>;
   isTodosLoading: ReturnType<typeof isTodosLoadingSelector>;
   deleteTodo: typeof deleteTodoActionSaga;
   updateTodo: typeof fetchFormManagerSagaAction;
 };
 
-type Props = MapStateOutputType;
+export class Wrapper extends PureComponent<PropsType> {
+  render() {
+    const { todos, isTodosLoading, deleteTodo, updateTodo } = this.props;
 
-export const Wrapper = memo(
-  ({ todos, isTodosLoading, deleteTodo, updateTodo }: Props) => {
     if (!todos.length) {
       return <div>No todos</div>;
     }
@@ -37,10 +37,10 @@ export const Wrapper = memo(
         ))}
       </>
     );
-  },
-);
+  }
+}
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: TodosStoreType) => ({
   todos: todosSelector(state),
   isTodosLoading: isTodosLoadingSelector(state),
 });
@@ -50,6 +50,7 @@ const mapDispatchToProps = {
   updateTodo: fetchFormManagerSagaAction,
 };
 
-export const ConnectedTodoList = compose<ComponentType<unknown>>(
-  connect(mapStateToProps, mapDispatchToProps),
+export const ConnectedTodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps,
 )(Wrapper);

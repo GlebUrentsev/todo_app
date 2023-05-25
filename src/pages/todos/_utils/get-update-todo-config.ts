@@ -14,11 +14,9 @@ export const getUpdateTodoConfig = (
   updatedData: UpdatedTodoType,
 ): FormManagerType => {
   return {
-    formValues: {
-      ...updatedData,
-    },
-    loadingStartAction: () => startLoadingTodosAction(),
-    loadingStopAction: () => stopLoadingTodosAction(),
+    formValues: updatedData,
+    loadingStartAction: startLoadingTodosAction,
+    loadingStopAction: stopLoadingTodosAction,
     showNotification: true,
     formRequest: ({ body }) => updateTodoRequest(body),
     textMessageSuccess: 'Задача успешно изменена',

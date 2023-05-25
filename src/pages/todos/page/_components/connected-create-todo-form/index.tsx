@@ -1,45 +1,46 @@
-import { ComponentType, memo, useCallback, useRef } from 'react';
+import { Component, RefObject, createRef } from 'react';
 import { fetchFormManagerSagaAction } from '@mihanizm56/redux-core-modules';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 import { FormApi } from 'final-form';
 import { isTodosLoadingSelector } from '@/pages/todos/_redux/todos-module';
-import { CreatedTodoType } from '@/pages/todos/_redux/todos-module/_types';
+import {
+  CreatedTodoType,
+  TodosStoreType,
+} from '@/pages/todos/_redux/todos-module/_types';
 import { getCreateTodoConfig } from '@/pages/todos/_utils/get-create-todo-config';
 import { CreateTodoFormView } from './_components/create-todo-form-view';
 
-type MapStateOutputType = {
+type PropsType = {
   isTodosLoading: ReturnType<typeof isTodosLoadingSelector>;
   createTodo: typeof fetchFormManagerSagaAction;
 };
 
-type PropsType = MapStateOutputType;
+export class Wrapper extends Component<PropsType> {
+  formApiRef: RefObject<FormApi<CreatedTodoType>> = createRef();
 
-const Wrapper = memo(({ isTodosLoading, createTodo }: PropsType) => {
-  const formApiRef = useRef<FormApi<CreatedTodoType>>(null);
+  handleSubmit = (values: CreatedTodoType) => {
+    this.props.createTodo(
+      getCreateTodoConfig({
+        formApi: this.formApiRef.current,
+        values,
+      }),
+    );
+  };
 
-  const handleSubmit = useCallback(
-    (values: CreatedTodoType) => {
-      createTodo(
-        getCreateTodoConfig({
-          formApi: formApiRef.current,
-          values,
-        }),
-      );
-    },
-    [createTodo],
-  );
+  render() {
+    const { isTodosLoading } = this.props;
 
-  return (
-    <CreateTodoFormView
-      formApiRef={formApiRef}
-      isLoading={isTodosLoading}
-      onSubmit={handleSubmit}
-    />
-  );
-});
+    return (
+      <CreateTodoFormView
+        formApiRef={this.formApiRef}
+        isLoading={isTodosLoading}
+        onSubmit={this.handleSubmit}
+      />
+    );
+  }
+}
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: TodosStoreType) => ({
   isTodosLoading: isTodosLoadingSelector(state),
 });
 
@@ -47,6 +48,7 @@ const mapDispatchToProps = {
   createTodo: fetchFormManagerSagaAction,
 };
 
-export const ConnectedCreateTodoForm = compose<ComponentType<unknown>>(
-  connect(mapStateToProps, mapDispatchToProps),
+export const ConnectedCreateTodoForm = connect(
+  mapStateToProps,
+  mapDispatchToProps,
 )(Wrapper);

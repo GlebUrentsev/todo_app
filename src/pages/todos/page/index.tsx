@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { ConnectedCreateTodoForm } from './_components/connected-create-todo-form';
 import { ConnectedTodoList } from './_components/connected-todo-list';
 
-const BLOCK_NAME = 'todo-page';
+const BLOCK_NAME = 'TodoPage';
 
 export const TodoPage = memo(() => {
   return (

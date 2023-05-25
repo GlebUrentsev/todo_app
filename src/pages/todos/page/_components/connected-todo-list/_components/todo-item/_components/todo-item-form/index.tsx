@@ -1,10 +1,11 @@
 import { memo } from 'react';
 import { Form, Field } from 'react-final-form';
 import { FormCheckbox, FormSimpleInput } from '@wildberries/ui-kit';
-import { validateTodoForm } from '@/pages/todos/page/_utils/validations';
+import { UpdatedTodoType } from '@/pages/todos/_redux/todos-module/_types';
+import { TODO_FORM_VALIDATIONS } from '@/pages/todos/page/_constants/validate';
 
 type PropsType = {
-  onSubmit: (values: any) => void;
+  onSubmit: (values: UpdatedTodoType) => void;
   onCancel: () => void;
   isLoading: boolean;
   description: string;
@@ -12,78 +13,60 @@ type PropsType = {
   title: string;
 };
 
-export const TodoItemUpdateForm = memo(
+export const TodoItemForm = memo(
   ({ onSubmit, onCancel, isLoading, description, title, done }: PropsType) => {
     return (
       <Form
         onSubmit={onSubmit}
-        render={({
-          handleSubmit,
-          errors,
-          touched,
-          submitting,
-          pristine,
-          invalid,
-        }) => {
+        render={({ handleSubmit, submitting, pristine, invalid }) => {
+          const isSubmitDisabled =
+            submitting || pristine || isLoading || invalid;
+
           return (
-            <>
-              <form onSubmit={handleSubmit}>
-                <Field
-                  autoComplete="off"
-                  component={FormSimpleInput}
-                  externalErrorMessage={
-                    touched.title && errors.title && <span>{errors.title}</span>
-                  }
-                  id="todo-title"
-                  initialValue={title}
-                  label="Изменить заголовок"
-                  name="title"
-                  placeholder="Новый заголовок задачи"
-                  required
-                  type="text"
-                />
-                <Field
-                  autoComplete="off"
-                  component={FormSimpleInput}
-                  externalErrorMessage={
-                    touched.description &&
-                    errors.description && <span>{errors.description}</span>
-                  }
-                  id="todo-description"
-                  initialValue={description}
-                  label="Изменить задачу"
-                  name="description"
-                  placeholder="Новое название задачи"
-                  required
-                  type="text"
-                />
-                <Field
-                  autoComplete="off"
-                  component={FormCheckbox}
-                  disable={false}
-                  externalErrorMessage={
-                    touched.done && errors.done && <span>{errors.done}</span>
-                  }
-                  id="todo-done"
-                  initialValue={done}
-                  label="Задача выполнена"
-                  name="done"
-                  type="checkbox"
-                />
-                <button
-                  disabled={submitting || pristine || isLoading || invalid}
-                  type="submit"
-                >
-                  Изменить
-                </button>
-                <button onClick={onCancel} type="button">
-                  Отмена
-                </button>
-              </form>
-            </>
+            <form onSubmit={handleSubmit}>
+              <Field
+                autoComplete="off"
+                component={FormSimpleInput}
+                id="todo-title"
+                initialValue={title}
+                label="Изменить заголовок"
+                name="title"
+                placeholder="Новый заголовок задачи"
+                required
+                type="text"
+                validate={TODO_FORM_VALIDATIONS.title}
+              />
+              <Field
+                autoComplete="off"
+                component={FormSimpleInput}
+                id="todo-description"
+                initialValue={description}
+                label="Изменить задачу"
+                name="description"
+                placeholder="Новое название задачи"
+                required
+                type="text"
+                validate={TODO_FORM_VALIDATIONS.description}
+              />
+              <Field
+                autoComplete="off"
+                component={FormCheckbox}
+                disable={false}
+                id="todo-done"
+                initialValue={done}
+                label="Задача выполнена"
+                name="done"
+                type="checkbox"
+              />
+              <button disabled={isSubmitDisabled} type="submit">
+                Изменить
+              </button>
+              <button onClick={onCancel} type="button">
+                Отмена
+              </button>
+            </form>
           );
         }}
-        validate={validateTodoForm}
       />
     );
   },

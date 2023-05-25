@@ -12,7 +12,7 @@ import { CreatedTodoType } from '@/pages/todos/_redux/todos-module/_types';
 import { resetFinalFormFields } from '../page/_utils/form';
 import { getFetchTodosConfig } from './get-fetch-todos-config';
 
-type Params = {
+type ParamsType = {
   values: CreatedTodoType;
   formApi: FormApi<CreatedTodoType>;
 };
@@ -20,10 +20,10 @@ type Params = {
 export const getCreateTodoConfig = ({
   values,
   formApi,
-}: Params): FormManagerType => ({
+}: ParamsType): FormManagerType => ({
   formValues: values,
-  loadingStartAction: () => startLoadingTodosAction(),
-  loadingStopAction: () => stopLoadingTodosAction(),
+  loadingStartAction: startLoadingTodosAction,
+  loadingStopAction: stopLoadingTodosAction,
   showNotification: true,
   formRequest: ({ body }) => createTodoRequest(body),
   textMessageSuccess: 'Задача успешно создана',

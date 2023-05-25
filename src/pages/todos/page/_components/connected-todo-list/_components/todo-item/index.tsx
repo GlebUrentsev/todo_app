@@ -1,31 +1,34 @@
 import { memo, useCallback, useState } from 'react';
 import { fetchFormManagerSagaAction } from '@mihanizm56/redux-core-modules';
 import { deleteTodoActionSaga } from '@/pages/todos/_redux/todos-module';
-import { Todo } from '@/pages/todos/_redux/todos-module/_types';
+import {
+  UpdatedTodoType,
+  TodoType,
+} from '@/pages/todos/_redux/todos-module/_types';
 import { getUpdateTodoConfig } from '@/pages/todos/_utils/get-update-todo-config';
-import { TodoItemUpdateForm } from './_components/todo-item-form';
+import { TodoItemForm } from './_components/todo-item-form';
 
-type Props = {
-  todo: Todo;
+type PropsType = {
+  todo: TodoType;
   onDelete: typeof deleteTodoActionSaga;
   onUpdate: typeof fetchFormManagerSagaAction;
   isTodosLoading: boolean;
 };
 
 export const TodoItem = memo(
-  ({ todo, onDelete, onUpdate, isTodosLoading }: Props) => {
+  ({ todo, onDelete, onUpdate, isTodosLoading }: PropsType) => {
     const [isEditing, setIsEditing] = useState(false);
 
-    const toggleEditing = useCallback(() => {
+    const toggleEditing = () => {
       setIsEditing((prev) => !prev);
-    }, []);
+    };
 
     const candelEdit = useCallback(() => {
       setIsEditing(false);
     }, []);
 
     const handleSubmit = useCallback(
-      (values) => {
+      (values: UpdatedTodoType) => {
         const updatedTodo = {
           id: todo.id,
           ...values,
@@ -36,9 +39,13 @@ export const TodoItem = memo(
       [candelEdit, onUpdate, todo.id],
     );
 
+    const handleDeleteClick = () => {
+      onDelete({ id: todo.id });
+    };
+
     if (isEditing) {
       return (
-        <TodoItemUpdateForm
+        <TodoItemForm
           description={todo.description}
           done={todo.done}
           isLoading={isTodosLoading}
@@ -50,18 +57,16 @@ export const TodoItem = memo(
     }
 
     return (
-      <>
-        <div key={todo.id}>
-          {new Date(todo.createdAt).toLocaleDateString('ru-RU')} {todo.title}{' '}
-          {todo.description} {todo.done ? 'Завершена' : 'Не завершена'}
-          <button onClick={toggleEditing} type="button">
-            Edit
-          </button>{' '}
-          <button onClick={() => onDelete({ id: todo.id })} type="button">
-            Delete
-          </button>
-        </div>
-      </>
+      <div key={todo.id}>
+        {new Date(todo.createdAt).toLocaleDateString('ru-RU')} {todo.title}{' '}
+        {todo.description} {todo.done ? 'Завершена' : 'Не завершена'}
+        <button onClick={toggleEditing} type="button">
+          Edit
+        </button>{' '}
+        <button onClick={handleDeleteClick} type="button">
+          Delete
+        </button>
+      </div>
     );
   },
 );

@@ -1,6 +1,6 @@
 type ObjValueType<Obj extends object, Key extends keyof Obj> = Obj[Key];
 
-export type Todo = {
+export type TodoType = {
   id: number;
   createdAt: Date;
   done: boolean;
@@ -8,13 +8,13 @@ export type Todo = {
   title: string;
 };
 
-export type TodoIdType = ObjValueType<Todo, 'id'>;
+export type TodoIdType = ObjValueType<TodoType, 'id'>;
 
-export type CreatedTodoType = Pick<Todo, 'description' | 'title'>;
+export type CreatedTodoType = Pick<TodoType, 'description' | 'title'>;
 
-export type UpdatedTodoType = Pick<Todo, 'description' | 'title' | 'done'>;
+export type UpdatedTodoType = Pick<TodoType, 'description' | 'title' | 'done'>;
 
-export type TodosState = {
-  todos: Array<Todo>;
+export type TodosStoreType = {
+  todos: Array<TodoType>;
   isLoading: boolean;
 };

@@ -3,14 +3,14 @@ import { fetchTodosRequest } from '@/api/requests/todos/fetch-todo';
 import {
   startLoadingTodosAction,
   stopLoadingTodosAction,
-  fetchTodoSucceededAction,
+  fetchTodoSuccessAction,
 } from '../_redux/todos-module';
 
 export const getFetchTodosConfig = (): InitLoadManagerRequestOptionsType => ({
-  request: () => fetchTodosRequest(),
-  loadingStartAction: () => startLoadingTodosAction(),
-  loadingStopAction: () => stopLoadingTodosAction(),
-  actionSuccess: (data) => fetchTodoSucceededAction(data.todos),
+  request: fetchTodosRequest,
+  loadingStartAction: startLoadingTodosAction,
+  loadingStopAction: stopLoadingTodosAction,
+  actionSuccess: (data) => fetchTodoSuccessAction(data.todos),
   showErrorNotification: true,
   titleMessageError: 'Ошибка при получении задач',
 });

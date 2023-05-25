@@ -1,5 +1,4 @@
-import React from 'react';
-import { RouteNode } from '@wildberries/service-router';
+import { IAction, RouteNode } from '@wildberries/service-router';
 import { ReduxStoreLoader } from '@mihanizm56/redux-core-modules';
 import { AppLayout } from '@/_layouts/app-layout';
 import { TodoPage } from './page';
@@ -7,7 +6,7 @@ import { storeInjectConfig } from './store-inject-config';
 
 const pageNode = 'todo-list';
 
-const action = async ({ fromState, toState }) => {
+const action: IAction = async ({ fromState, toState }) => {
   return {
     title: 'TodoPage',
     content: (
