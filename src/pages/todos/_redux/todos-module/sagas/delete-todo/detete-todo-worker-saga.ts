@@ -1,8 +1,10 @@
 import { call, put } from 'redux-saga/effects';
 import { setModalAction } from '@wildberries/notifications';
 import { initLoadManagerActionSaga } from '@mihanizm56/redux-core-modules';
+import i18next from 'i18next';
 import { deleteTodoRequest } from '@/api/requests/todos/delete-todo';
 import { getFetchTodosConfig } from '@/pages/todos/_utils/get-fetch-todos-config';
+import { TODO_LIST_PAGE_TRANSLATES } from '@/pages/todos/page/_constants/translations';
 import { startLoadingTodosAction, stopLoadingTodosAction } from '../../actions';
 
 export function* deleteTodoWorkerSaga(action) {
@@ -25,7 +27,7 @@ export function* deleteTodoWorkerSaga(action) {
       setModalAction({
         status: 'success',
         title: 'Удалено',
-        text: 'Задача успешно удалена',
+        text: i18next.t(TODO_LIST_PAGE_TRANSLATES.deleteTodoSucces),
         customHoldTimeout: 2500,
       }),
     );
@@ -35,7 +37,7 @@ export function* deleteTodoWorkerSaga(action) {
     yield put(
       setModalAction({
         status: 'error',
-        title: 'Не получось удалить задачу',
+        title: i18next.t(TODO_LIST_PAGE_TRANSLATES.deleteTodoError),
         text: error.message,
       }),
     );
