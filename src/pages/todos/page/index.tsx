@@ -1,13 +1,19 @@
 import { memo } from 'react';
+import classnames from 'classnames/bind';
 import { ConnectedCreateTodoForm } from './_components/connected-create-todo-form';
 import { ConnectedTodoList } from './_components/connected-todo-list';
+import styles from './index.module.scss';
+
+const cn = classnames.bind(styles);
 
 const BLOCK_NAME = 'TodoPage';
 
 export const TodoPage = memo(() => {
   return (
-    <div data-page={BLOCK_NAME}>
+    <div className={cn(BLOCK_NAME)} data-page={BLOCK_NAME}>
       <ConnectedCreateTodoForm />
+
+      <div className={cn(`${BLOCK_NAME}__devider`)} />
 
       <ConnectedTodoList />
     </div>
